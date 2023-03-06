@@ -13,10 +13,10 @@ class PageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return "Selamat Datang";
-    }
+    // public function index()
+    // {
+    //     return "Selamat Datang";
+    // }
 
     public function about(){
         return "Nama : Alwan Alawi Nim : 2141720178";
@@ -92,4 +92,53 @@ class PageController extends Controller
     {
         //
     }
+
+    public function product(){
+        echo "List Product: <br>
+        <ul>
+            <li>
+                <a href='https://www.educastudio.com/category/marbel-edu-games'>product 1</a>
+            </li>
+            <li>
+                <a href='https://www.educastudio.com/category/marbel-and-friends-kids-games'>Product 2</a>
+            </li>
+            <li>
+                <a href='https://www.educastudio.com/category/riri-story-books'>Product 3</a>
+            </li>
+            <li>
+                <a href='https://www.educastudio.com/category/kolak-kids-songs'>Product 4</a>
+            </li>
+        </ul>
+        ";
+    }
+
+    public function progam()
+    {
+        echo "List Progam: <br>
+        <ul>
+            <li>
+                <a href='https://www.educastudio.com/program/karir'>progam 1</a>
+            </li>
+            <li>
+                <a href='https://www.educastudio.com/program/magang'>Progam 2</a>
+            </li>
+            <li>
+                <a href='https://www.educastudio.com/program/kunjungan-industri'>Progam 3</a>
+            </li>
+        </ul>
+        ";
+    }
+
+    public function index(){
+        return 'Laman Kontak Kami <br>
+        <ul>
+            <li>WHATS APP : 085257146203</li>
+            <li>EMAIL : alwanalawi1@gmail.com</li>
+        </ul>
+        <label>kontak</label> <br>
+        <input placeholder="Masukan Kontak">
+        <button>Submit</button>
+        ';
+    }
+
 }
