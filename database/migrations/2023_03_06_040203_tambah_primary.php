@@ -13,9 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('kendaraan', function (Blueprint $table) {
-            $table->primary('No_pol');
-        });
+        
     }
 
     /**

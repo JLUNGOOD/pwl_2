@@ -69,7 +69,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('pengalaman')}}" class="nav-link">
+                    <a href="{{ url('keluarga')}}" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
                             Keluarga
