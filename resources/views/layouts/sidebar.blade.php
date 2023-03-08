@@ -62,7 +62,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('hobi')}}" class="nav-link">
-                        <i class="nav-icon fas fa-copy "></i>
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Hobi
                         </p>
@@ -70,14 +70,14 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('keluarga')}}" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
+                        <i class="nav-icon fas fa-th"></i>
                         <p>
                             Keluarga
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('pengalaman')}}" class="nav-link">
+                    <a href="{{ url('matkul')}}" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
                             Mata Kuliah

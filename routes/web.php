@@ -9,6 +9,7 @@ use App\Http\Controllers\Home2Controller;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KeluargaController;
 use App\Http\Controllers\KendaraanController;
+use App\Http\Controllers\MatkulController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PengalamanController;
 use App\Http\Controllers\ProfileController;
@@ -118,3 +119,4 @@ Route::get('/hobi',[HobiController::class,'index']);
 
 Route::get('/kendaraan',[KendaraanController::class, 'index']);
 Route::get('/keluarga', [KeluargaController::class, 'index']);
+Route::get('/matkul',[MatkulController::class, 'index']);
