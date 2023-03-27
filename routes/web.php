@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\contactController;
 use App\Http\Controllers\DasboardController;
 use App\Http\Controllers\HobiController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\MatkulController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PengalamanController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -70,7 +72,7 @@ use Illuminate\Support\Facades\Route;
 //     <ul>
 //         <li>
 //             <a href='https://www.educastudio.com/news'>Berita 1</a>
-            
+
 //         </li>
 //         <li>
 //             <a href='https://www.educastudio.com/news/educa-studio-berbagi-untuk-warga-sekitarterdampak-covid-19'>Berita 2</a>
@@ -112,11 +114,20 @@ use Illuminate\Support\Facades\Route;
 // Route::resource('/contact', contactController::class);
 
 //Praktikum2
-Route::get('/dasboard',[DasboardController::class,'index']);
-Route::get('/profile',[ProfileController::class,'index']);
-Route::get('/pengalaman',[PengalamanController::class,'index']);
-Route::get('/hobi',[HobiController::class,'index']);
 
-Route::get('/kendaraan',[KendaraanController::class, 'index']);
-Route::get('/keluarga', [KeluargaController::class, 'index']);
-Route::get('/matkul',[MatkulController::class, 'index']);
+Auth::routes();
+Route::get('/logout', [LoginController::class, 'logout']);
+Route::middleware(['auth'])->group(function(){
+    Route::get('/', [DasboardController::class, 'index']);
+    Route::get('/dasboard', [DasboardController::class, 'index']);
+    Route::get('/profile', [ProfileController::class, 'index']);
+    Route::get('/pengalaman', [PengalamanController::class, 'index']);
+    Route::get('/hobi', [HobiController::class, 'index']);
+
+    Route::get('/kendaraan', [KendaraanController::class, 'index']);
+    Route::get('/keluarga', [KeluargaController::class, 'index']);
+    Route::get('/matkul', [MatkulController::class, 'index']);
+    
+
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
