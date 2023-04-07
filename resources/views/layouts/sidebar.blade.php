@@ -70,7 +70,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('keluarga')}}" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="fas fa-yin-yang"></i>
                         <p>
                             Keluarga
                         </p>
@@ -78,9 +78,18 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('matkul')}}" class="nav-link">
-                        <i class="nav-icon fas fa-copy"></i>
+                        <i class="fas fa-book"></i>
                         <p>
                             Mata Kuliah
+                        </p>
+                    </a>
+                </li>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url('/mahasiswa')}}" class="nav-link">
+                        <i class="fas fa-sitemap"></i>
+                        <p>
+                            Mahasiswa
                         </p>
                     </a>
                 </li>
