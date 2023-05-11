@@ -71,6 +71,7 @@
                 <th>No</th>
                 <th>Nim</th>
                 <th>Nama</th>
+                <th>Prodi</th>
                 <th>JK</th>
                 <th>Tempat Lahir</th>
                 <th>Tanggal Lahir</th>
@@ -86,6 +87,7 @@
                       <td>{{$i + 1}}</td>
                       <td>{{$m->nim}}</td>
                       <td>{{$m->nama}}</td>
+                      <td>{{$m->prodi->prodi}}</td>
                       <td>{{$m->jk}}</td>
                       <td>{{$m->tempat_lahir}}</td>
                       <td>{{$m->tanggal_lahir}}</td>

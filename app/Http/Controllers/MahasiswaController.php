@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mahasiswa;
 use App\Models\MahasiswaModel;
+use App\Models\ProdiModel;
 use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
@@ -27,8 +28,10 @@ class MahasiswaController extends Controller
      */
     public function create()
     {
-        return view('mahasiswa.create_mahasiswa')
-            ->with('url_form', url('/mahasiswa'));
+        $prodi = ProdiModel::all();
+        return view('mahasiswa.create_mahasiswa',)
+            ->with('url_form', url('/mahasiswa'))
+            ->with('prodi', $prodi);
     }
 
     /**
@@ -42,6 +45,7 @@ class MahasiswaController extends Controller
         $request->validate([
             'nim' => 'required|string|max:10|unique:mahasiswa,nim',
             'nama' => 'required|string|max:50',
+            'id_prodi' => 'required|numeric',
             'jk' => 'required|in:l,p',
             'tempat_lahir' => 'required|string|max:50',
             'tanggal_lahir' => 'required|date',
@@ -75,9 +79,11 @@ class MahasiswaController extends Controller
     public function edit($id)
     {
         // dd($mahasiswa->get());
+        $prodi = ProdiModel::where('id_prodi', $id)->get();
         $mahasiswa = MahasiswaModel::find($id);
         return view('mahasiswa.create_mahasiswa')
             ->with('mhs' ,$mahasiswa)
+            ->with('prodi', $prodi)
             ->with('url_form', url('/mahasiswa/'. $id));
     }
 
@@ -93,6 +99,7 @@ class MahasiswaController extends Controller
         $request->validate([
             'nim' => 'required|string|max:10|unique:mahasiswa,nim,'.$id,
             'nama' => 'required|string|max:50',
+            'id_prodi' => 'required|numerik',
             'jk' => 'required|in:l,p',
             'tempat_lahir' => 'required|string|max:50',
             'tanggal_lahir' => 'required|date',

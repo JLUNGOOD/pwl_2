@@ -63,10 +63,9 @@
         </div>
         <div class="card-body">
             <form method="POST" action="{{ $url_form }}">
-
             @csrf
             {{!!(isset($mhs))? method_field('PUT'):''!!}}
-
+          
                 <div class="form-group">
                     <label>Nim</label>
                     <input class="form-control @error('nim') is-invalid @enderror" value="{{ isset($mhs)? $mhs->nim : old('nim') }}" name="nim" type="text" />
@@ -81,6 +80,19 @@
                     @error('nama')
                         <span class="error invalid-feedback">{{ $message }} </span>
                     @enderror
+                </div>
+
+                <div class="form-group">
+                      <label>Prodi</label>
+                      
+                      <select class="form-control @error('id_prodi') is-invalid @enderror" name="id_prodi" >
+                          @foreach($prodi as $p)
+                              <option value="{{ $p->id_prodi }}"> {{ $p->prodi }}</option>
+                          @endforeach
+                      </select>
+                      @error('prodi')
+                        <span class="error invalid-feedback">{{ $message }} </span>
+                      @enderror
                 </div>
 
                 <div class="form-group">
