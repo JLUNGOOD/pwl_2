@@ -95,7 +95,12 @@
                       <td>{{$m->hp}}</td>
                       <td>
                         {{-- Tombol edit dan delete --}}
+                        <a href="{{url('/mahasiswa/'.$m->id)}}" class="btn btn-sm btn-primary my-2">show</a>
+
+                        <a href="{{url('/mahasiswa/'.$m->id. '/nilai')}}" class="btn btn-sm btn-success my-2">nilai</a>
+
                         <a href="{{url('/mahasiswa/'.$m->id. '/edit')}}" class="btn btn-sm btn-warning my-2">edit</a>
+
                         <form method="POST" action="{{url('/mahasiswa/'.$m->id)}}">
                             @csrf
                             @method('DELETE')

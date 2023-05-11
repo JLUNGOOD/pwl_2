@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mahasiswa;
+use App\Models\MahasiswaMatakuliahModel;
 use App\Models\MahasiswaModel;
 use App\Models\ProdiModel;
 use Illuminate\Http\Request;
@@ -65,10 +66,6 @@ class MahasiswaController extends Controller
      * @param  \App\Models\Mahasiswa  $mahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function show(MahasiswaModel $mahasiswa)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -124,5 +121,20 @@ class MahasiswaController extends Controller
         MahasiswaModel::where('id', '=', $id)->delete();
         return redirect('mahasiswa')
             ->with('success', 'Mahasiswa berhasil dihapus');
+    }
+
+    public function show($id)
+    {
+        $mahasiswa = MahasiswaModel::with('prodi')->where('id', $id)->first();
+        return view('mahasiswa.detail_mahasiswa', ['mahasiswa' => $mahasiswa]);
+    }
+
+    public function nilai($id){
+        $data = MahasiswaModel::where('id', $id)->first();
+        $khs = MahasiswaMatakuliahModel::where('mahasiswa_id', $id)->get();
+        return view('mahasiswa.show_mahasiswa')
+            ->with('data' , $data)
+            ->with('khs' , $khs);
+
     }
 }
