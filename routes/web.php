@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\contactController;
 use App\Http\Controllers\DasboardController;
@@ -128,8 +129,11 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/kendaraan', [KendaraanController::class, 'index']);
     Route::get('/keluarga', [KeluargaController::class, 'index']);
     Route::get('/matkul', [MatkulController::class, 'index']);
-    
 
+    Route::get('articles/cetak_pdf',[ArticlesController::class, 'cetak_pdf']);
+    Route::resource('articles', ArticlesController::class);
+    // Route::get('articlecetak', [ArticleController::class, 'cetak_pdf']);
+    
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('/mahasiswa', MahasiswaController::class)->parameter('mahasiswa', 'id');
     Route::get('/mahasiswa/{id}/nilai', [MahasiswaController::class, 'nilai']);
