@@ -27,7 +27,7 @@ class ArticlesController extends Controller
      */
     public function create(Request $request)
     {
-        // return view('articles.create');
+        return view('articles.create');
         return view('articles.edit');
     }
 
@@ -71,7 +71,7 @@ class ArticlesController extends Controller
     public function edit($id)
     {
         $articles = Articles::find($id);
-        return view('articles.edit',['article' => $articles]);
+        return view('articles.edit',['articles' => $articles]);
     }
 
     /**

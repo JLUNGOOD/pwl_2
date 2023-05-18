@@ -71,6 +71,7 @@
                 <th>No</th>
                 <th>Nim</th>
                 <th>Nama</th>
+                <th>Foto</th>
                 <th>Prodi</th>
                 <th>JK</th>
                 <th>Tempat Lahir</th>
@@ -87,6 +88,9 @@
                       <td>{{$i + 1}}</td>
                       <td>{{$m->nim}}</td>
                       <td>{{$m->nama}}</td>
+                      <td>
+                          <img src="{{ asset('storage/' . $m->foto) }}" alt="{{ $m->foto }}" width="50">
+                      </td>
                       <td>{{$m->prodi->prodi}}</td>
                       <td>{{$m->jk}}</td>
                       <td>{{$m->tempat_lahir}}</td>

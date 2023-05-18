@@ -7,6 +7,7 @@ use App\Models\MahasiswaMatakuliahModel;
 use App\Models\MahasiswaModel;
 use App\Models\ProdiModel;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\PDF;
 
 class MahasiswaController extends Controller
 {
@@ -46,6 +47,7 @@ class MahasiswaController extends Controller
         $request->validate([
             'nim' => 'required|string|max:10|unique:mahasiswa,nim',
             'nama' => 'required|string|max:50',
+            'foto' => 'required|image|mimes:jpeg,png,jpg',
             'id_prodi' => 'required|numeric',
             'jk' => 'required|in:l,p',
             'tempat_lahir' => 'required|string|max:50',
@@ -54,8 +56,23 @@ class MahasiswaController extends Controller
             'hp' => 'required|digits_between:6, 15',
 
         ]);
-        $date =MahasiswaModel::create($request->except(['_token']));
+        if ($request->file('foto')) {
+            $image_name = $request->file('foto')->store('kaki', 'public');
+        }
+
+        MahasiswaModel::create([
+            'nim' => $request->nim,
+            'nama' => $request->nama,
+            'foto' => $image_name,
+            'id_prodi' => $request->id_prodi,
+            'jk' => $request->jk,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'alamat' => $request->alamat,
+            'hp' => $request->hp,
+        ]);
         // Jika data berhasil ditambahkan, akan kembali kehalaman utama
+        // return dd(dd($request->all()));
         return redirect('mahasiswa')
             ->with('success', 'Mahasiswa Berhasil ditambahkan');
     }
@@ -96,6 +113,7 @@ class MahasiswaController extends Controller
         $request->validate([
             'nim' => 'required|string|max:10|unique:mahasiswa,nim,'.$id,
             'nama' => 'required|string|max:50',
+            'foto' => 'required|image|mimes:jpeg,png,jpg',
             'id_prodi' => 'required|numerik',
             'jk' => 'required|in:l,p',
             'tempat_lahir' => 'required|string|max:50',
@@ -104,6 +122,7 @@ class MahasiswaController extends Controller
             'hp' => 'required|digits_between:6, 15',
 
         ]);
+        $images_name = $request->file('foto')->store('images', 'pulic');
         $date = MahasiswaModel::where('id','=', $id)->update($request->except(['_token', '_method']));
         // Jika data berhasil ditambahkan, akan kembali kehalaman utama
         return redirect('mahasiswa')
@@ -118,6 +137,7 @@ class MahasiswaController extends Controller
      */
     public function destroy($id)
     {
+        MahasiswaMatakuliahModel::where('mahasiswa_id', '=' , $id)->delete();
         MahasiswaModel::where('id', '=', $id)->delete();
         return redirect('mahasiswa')
             ->with('success', 'Mahasiswa berhasil dihapus');
@@ -125,6 +145,7 @@ class MahasiswaController extends Controller
 
     public function show($id)
     {
+        $khs = MahasiswaMatakuliahModel::where('mahasiswa_id', $id)->get();
         $mahasiswa = MahasiswaModel::with('prodi')->where('id', $id)->first();
         return view('mahasiswa.detail_mahasiswa', ['mahasiswa' => $mahasiswa]);
     }
@@ -136,5 +157,13 @@ class MahasiswaController extends Controller
             ->with('data' , $data)
             ->with('khs' , $khs);
 
+    }
+
+    public function cetak_pdf($id)
+    {
+        $data = MahasiswaModel::where('id', $id)->first();
+        $khs = MahasiswaMatakuliahModel::where('mahasiswa_id', $id)->get();
+        $pdf = PDF::loadview('mahasiswa.cetak_pdf', ['data' => $data, 'khs' => $khs]);
+        return $pdf->stream();
     }
 }

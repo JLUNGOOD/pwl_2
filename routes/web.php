@@ -131,11 +131,11 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/matkul', [MatkulController::class, 'index']);
 
     Route::get('articles/cetak_pdf',[ArticlesController::class, 'cetak_pdf']);
+    Route::get('/mahasiswa/cetak_pdf/{id}', [MahasiswaController::class, 'cetak_pdf']);
     Route::resource('articles', ArticlesController::class);
-    // Route::get('articlecetak', [ArticleController::class, 'cetak_pdf']);
     
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('/mahasiswa', MahasiswaController::class)->parameter('mahasiswa', 'id');
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/mahasiswa/{id}/nilai', [MahasiswaController::class, 'nilai']);
     Route::get('/mahasiswa/{id}/show', [MahasiswaController::class, 'show']);
 });

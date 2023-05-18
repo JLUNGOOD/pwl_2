@@ -34,7 +34,7 @@
             <td>{{$a->title}}</td>
             <td>{{$a->content}}</td>
             <td>
-                <img src="{{ asset('/storage') }}/{{$a->featured_image}}" alt="Featured Image">
+                <img src="{{ asset('/storage') }}/{{$a->featured_images}}" alt="Featured Images">
             </td>
         </tr>
     @endforeach

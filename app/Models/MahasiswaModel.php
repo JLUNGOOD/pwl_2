@@ -17,11 +17,16 @@ class MahasiswaModel extends Model
         'tanggal_lahir',
         'alamat',
         'hp',
-        'id_prodi'
+        'id_prodi',
+        'foto'
     ];
 
     public function prodi(){
         return $this->belongsTo(ProdiModel::class, 'id_prodi', 'id_prodi');
+    }
+
+    public function MahasiswaMatakuliahModel(){
+        return $this->hasMany(MahasiswaMatakuliahModel::class);
     }
 }
 
