@@ -135,6 +135,7 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('articles', ArticlesController::class);
     
     Route::resource('/mahasiswa', MahasiswaController::class)->parameter('mahasiswa', 'id');
+    Route::post('/mahasiswa/data', [MahasiswaController::class, 'data']);
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/mahasiswa/{id}/nilai', [MahasiswaController::class, 'nilai']);
     Route::get('/mahasiswa/{id}/show', [MahasiswaController::class, 'show']);

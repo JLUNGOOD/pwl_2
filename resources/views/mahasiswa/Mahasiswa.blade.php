@@ -1,152 +1,191 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Blank Page @yield('title')</title>
+ @extends('layouts.template')
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{asset ('assets/plugins/fontawesome-free/css/all.min.css') }}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{asset ('assets/dist/css/adminlte.min.css') }}">
-
-  @stack('custom.css')
-</head>
-<body class="hold-transition sidebar-mini">
-<!-- Site wrapper -->
-<div class="wrapper">
-  <!-- Navbar -->
-  @include('layouts.navbar')
-  <!-- /.navbar -->
-  @include('layouts.sidebar')
-  <!-- Main Sidebar Container -->
-  
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    @yield('contact')
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Blank Page</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Blank Page</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
-
+ @section('content')
+    
     <!-- Main content -->
     <section class="content">
 
       <!-- Default box -->
       <div class="card">
-        <div class="card-header">
-          {{-- <h3 class="card-title">Dasboard</h3> --}}
-
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-              <i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-        </div>
         <div class="card-body">
-          <a href="{{ url('mahasiswa/create')}}" class="btn btn-sm btn-success my-2">Tambah Data</a>
-          {{-- @yield('content') --}}
-          <table class="table table-bordered table-striped">
+          {{-- <a href="{{ url('mahasiswa/create')}}" class="btn btn-sm btn-success my-2">Tambah Data</a> --}}
+          <button class="btn btn-sm btn-success my-2" data-toggle="modal" data-target="#modal_mahasiswa">Tambah Data</button>
+          
+          <table class="table table-bordered table-striped" id="data_mahasiswa">
             <thead>
               <tr>
                 
                 <th>No</th>
                 <th>Nim</th>
                 <th>Nama</th>
-                <th>Foto</th>
+                {{-- <th>Foto</th>
                 <th>Prodi</th>
                 <th>JK</th>
                 <th>Tempat Lahir</th>
                 <th>Tanggal Lahir</th>
-                <th>Alamat</th>
+                <th>Alamat</th> --}}
                 <th>Hp</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              @if($mhs->count()>0)
-                @foreach ($mhs as $i => $m)
-                    <tr>
-                      <td>{{$i + 1}}</td>
-                      <td>{{$m->nim}}</td>
-                      <td>{{$m->nama}}</td>
-                      <td>
-                          <img src="{{ asset('storage/' . $m->foto) }}" alt="{{ $m->foto }}" width="50">
-                      </td>
-                      <td>{{$m->prodi->prodi}}</td>
-                      <td>{{$m->jk}}</td>
-                      <td>{{$m->tempat_lahir}}</td>
-                      <td>{{$m->tanggal_lahir}}</td>
-                      <td>{{$m->alamat}}</td>
-                      <td>{{$m->hp}}</td>
-                      <td>
-                        {{-- Tombol edit dan delete --}}
-                        <a href="{{url('/mahasiswa/'.$m->id)}}" class="btn btn-sm btn-primary my-2">show</a>
+              <?php
+              
+              
+              // {{-- @if($mhs->count()>0)
+              //   @foreach ($mhs as $i => $m)
+              //       <tr>
+              //         <td>{{$i + 1}}</td>
+              //         <td>{{$m->nim}}</td>
+              //         <td>{{$m->nama}}</td>
+              //         <td>
+              //             <img src="{{ asset('storage/' . $m->foto) }}" alt="{{ $m->foto }}" width="50">
+              //         </td>
+              //         <td>{{$m->prodi->prodi}}</td>
+              //         <td>{{$m->jk}}</td>
+              //         <td>{{$m->tempat_lahir}}</td>
+              //         <td>{{$m->tanggal_lahir}}</td>
+              //         <td>{{$m->alamat}}</td>
+              //         <td>{{$m->hp}}</td>
+              //         <td>  --}}
+              //           {{-- Tombol edit dan delete --}}
+              //           {{-- <a href="{{url('/mahasiswa/'.$m->id)}}" class="btn btn-sm btn-primary my-2">show</a>
 
-                        <a href="{{url('/mahasiswa/'.$m->id. '/nilai')}}" class="btn btn-sm btn-success my-2">nilai</a>
+              //           <a href="{{url('/mahasiswa/'.$m->id. '/nilai')}}" class="btn btn-sm btn-success my-2">nilai</a>
 
-                        <a href="{{url('/mahasiswa/'.$m->id. '/edit')}}" class="btn btn-sm btn-warning my-2">edit</a>
+              //           <a href="{{url('/mahasiswa/'.$m->id. '/edit')}}" class="btn btn-sm btn-warning my-2">edit</a>
 
-                        <form method="POST" action="{{url('/mahasiswa/'.$m->id)}}">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                        </form>
-                      </td>
-                    </tr>
-                @endforeach
-              @else
-              <tr><td colspan="9" class="text-center">Data Tidak ada</td></tr>
-              @endif
+              //           <form method="POST" action="{{url('/mahasiswa/'.$m->id)}}">
+              //               @csrf
+              //               @method('DELETE')
+              //               <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+              //           </form>
+              //         </td>
+              //       </tr>
+              //   @endforeach
+              // @else
+              // <tr><td colspan="9" class="text-center">Data Tidak ada</td></tr>
+              // @endif --}}
+             ?> 
             </tbody>
           </table>
         </div>
-        <!-- /.card-body -->
         
-        <!-- /.card-footer-->
-      </div>
-      <!-- /.card -->
 
     </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+    <div class="modal fade" id="modal_mahasiswa" style="display: none;" aria-hidden="true">
+        <form method="post" action="{{ url('mahasiswa') }}" role="form" class="form-horizontal" id="form_mahasiswa">
+        @csrf
+        <div class="modal-dialog modal-">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Default Modal</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-message"></div>
+                    <div class="form-group required row mb-2">
+                        <label class="col-sm-2 control-label col-form-label">NIM</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="nim" name="nim" value="" />
+                        </div>
+                    </div>
+                    <div class="form-group required row mb-2">
+                        <label class="col-sm-2 control-label col-form-label">Nama</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="nama" name="nama" value="" />
+                        </div>
+                    </div>
+                    <div class="form-group required row mb-2">
+                        <label class="col-sm-2 control-label col-form-label">No. HP</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm" id="hp" name="hp" value="" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+ @endsection
 
-  @include('layouts.footer')
+@push('js_tambahan')
+<script>
+    function updateData(th){
+        $('#modal_mahasiswa').modal('show');
+        $('#modal_mahasiswa .modal-title').html('Edit Data Mahasiswa');
+        $('#modal_mahasiswa #nim').val($(th).data('nim'));
+        $('#modal_mahasiswa #nama').val($(th).data('nama'));
+        $('#modal_mahasiswa #hp').val($(th).data('hp'));
+        $('#modal_mahasiswa #form_mahasiswa').attr('action', $(th).data('url'));
+        $('#modal_mahasiswa #form_mahasiswa').append('<input type="hidden" name="_method" value="PUT">');
+    }
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
+    $(document).ready(function (){
+        var dataMahasiswa = $('#data_mahasiswa').DataTable({
+            processing:true,
+            serverSide:true,
+            ajax:{
+                'url': '{{  url('mahasiswa/data') }}',
+                'dataType': 'json',
+                'type': 'POST',
+            },
+            columns:[
+                {data:'nomor', name:'nomor', searchable:false, sortable:false},
+                {data:'nim',name:'nim', sortable: false, searchable: true},
+                {data:'nama',name:'nama', sortable: false, searchable: true},
+                {data:'hp',name:'hp', sortable: false, searchable: true},
+                {data:'id',name:'id', sortable: false, searchable: false,
+                    render: function(data, type, row, meta){
+                        var btn = `<button data-url="{{ url('/mahasiswa')}}/`+data+`" class="btn btn-xs btn-warning" onclick="updateData(this)" data-id="`+row.id+`" data-nim="`+row.nim+`" data-nama="`+row.nama+`" data-hp="`+row.hp+`"><i class="fa fa-edit"></i> Edit</button>` +
+                                  `<a href="{{ url('/mahasiswa/') }} " class="btn btn-xs btn-info"><i class="fa fa-list"></i> Detail</a>` +
+                                  `<form method="POST" action="{{ url('/mahasiswa/') }}`+data+`">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="btn btn-xs btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"><i class="fa fa-trash"></i> Hapus</button>
+                                    </form>`;
+                        return btn;
+                    }
+                },
 
-<!-- jQuery -->
-<script src="{{asset ('assets/plugins/jquery/jquery.min.js') }}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{asset ('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- AdminLTE App -->
-<script src="{{asset ('assets/dist/js/adminlte.min.js') }}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{asset ('assets/dist/js/demo.js') }}"></script>
-</body>
-</html>
+            ]
+        });
+
+        $('#form_mahasiswa').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: $(this).attr('action'),
+                method: "POST",
+                data: $(this).serialize(),
+                dataType: 'json',
+                success:function(data){
+                    $('.form-message').html('');
+                    if(data.status){
+                        $('.form-message').html('<span class="alert alert-success" style="width: 100%">' + data.message + '</span>');
+                        $('#form_mahasiswa')[0].reset();
+                        dataMahasiswa.ajax.reload();
+                        $('#form_mahasiswa').attr('action', '{{ url('mahasiswa') }}');
+                        $('#form_mahasiswa').find('input[name="_method"]').remove();
+                    }else{
+                        $('.form-message').html('<span class="alert alert-danger" style="width: 100%">' + data.message + '</span>');
+                        alert('error');
+                    }
+
+                    if(data.modal_close){
+                        $('.form-message').html('');
+                        $('#modal_mahasiswa').modal('hide');
+                    }
+
+                }
+            });
+        });
+    });
+</script>
+@endpush
+
+
