@@ -201,7 +201,37 @@ class MahasiswaController extends Controller
      * @param  \App\Models\Mahasiswa  $mahasiswa
      * @return \Illuminate\Http\Response
      */
+
     public function destroy($id)
+    {
+        $mhs = MahasiswaModel::find($id);
+
+        if (!$mhs) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data not found',
+                'data' => null
+            ]);
+        }
+
+        $deleted = $mhs->delete();
+
+        if ($deleted) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Data berhasil dihapus',
+                'data' => null
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data gagal dihapus',
+                'data' => null
+            ]);
+        }
+    }
+
+    public function destroy_old($id)
     {
         MahasiswaMatakuliahModel::where('mahasiswa_id', '=' , $id)->delete();
         MahasiswaModel::where('id', '=', $id)->delete();
@@ -210,6 +240,17 @@ class MahasiswaController extends Controller
     }
 
     public function show($id)
+    {
+        $mahasiswa = MahasiswaModel::find($id);
+
+        if ($mahasiswa) {
+            return response()->json($mahasiswa);
+        } else {
+            return response()->json(['error' => 'Data not found'], 404);
+        }
+    }
+
+    public function show_old($id)
     {
         $khs = MahasiswaMatakuliahModel::where('mahasiswa_id', $id)->get();
         $mahasiswa = MahasiswaModel::with('prodi')->where('id', $id)->first();

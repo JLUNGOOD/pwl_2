@@ -13,20 +13,20 @@
           
           <table class="table table-bordered table-striped" id="data_mahasiswa">
             <thead>
-              <tr>
-                
-                <th>No</th>
-                <th>Nim</th>
-                <th>Nama</th>
-                {{-- <th>Foto</th>
-                <th>Prodi</th>
-                <th>JK</th>
-                <th>Tempat Lahir</th>
-                <th>Tanggal Lahir</th>
-                <th>Alamat</th> --}}
-                <th>Hp</th>
-                <th>Action</th>
-              </tr>
+                <tr>
+                    
+                    <th>No</th>
+                    <th>Nim</th>
+                    <th>Nama</th>
+                    {{-- <th>Foto</th>
+                    <th>Prodi</th>
+                    <th>JK</th>
+                    <th>Tempat Lahir</th>
+                    <th>Tanggal Lahir</th>
+                    <th>Alamat</th> --}}
+                    <th>Hp</th>
+                    <th>Action</th>
+                </tr>
             </thead>
             <tbody>
               <?php
@@ -75,48 +75,92 @@
     </section>
     <div class="modal fade" id="modal_mahasiswa" style="display: none;" aria-hidden="true">
         <form method="post" action="{{ url('mahasiswa') }}" role="form" class="form-horizontal" id="form_mahasiswa">
-        @csrf
-        <div class="modal-dialog modal-">
+            @csrf
+            <div class="modal-dialog modal-">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Default Modal</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row form-message"></div>
+                        <div class="form-group required row mb-2">
+                            <label class="col-sm-2 control-label col-form-label">NIM</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control form-control-sm" id="nim" name="nim" value="" />
+                            </div>
+                        </div>
+                        <div class="form-group required row mb-2">
+                            <label class="col-sm-2 control-label col-form-label">Nama</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control form-control-sm" id="nama" name="nama" value="" />
+                            </div>
+                        </div>
+                        <div class="form-group required row mb-2">
+                            <label class="col-sm-2 control-label col-form-label">No. HP</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control form-control-sm" id="hp" name="hp" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal fade" id="modal_show_mahasiswa" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Default Modal</h4>
+                    <h4 class="modal-title">Detail Mahasiswa</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="row form-message"></div>
-                    <div class="form-group required row mb-2">
-                        <label class="col-sm-2 control-label col-form-label">NIM</label>
+                    <div class="form-group row">
+                        <label class="col-sm-2 control-label">NIM</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control form-control-sm" id="nim" name="nim" value="" />
+                            <input type="text" class="form-control" id="show_nim" readonly>
                         </div>
                     </div>
-                    <div class="form-group required row mb-2">
-                        <label class="col-sm-2 control-label col-form-label">Nama</label>
+                    <div class="form-group row">
+                        <label class="col-sm-2 control-label">Nama</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control form-control-sm" id="nama" name="nama" value="" />
+                            <input type="text" class="form-control" id="show_nama" readonly>
                         </div>
                     </div>
-                    <div class="form-group required row mb-2">
-                        <label class="col-sm-2 control-label col-form-label">No. HP</label>
+                    <div class="form-group row">
+                        <label class="col-sm-2 control-label">No. HP</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control form-control-sm" id="hp" name="hp" value="" />
+                            <input type="text" class="form-control" id="show_hp" readonly>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer justify-content-between">
+                <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
-        </form>
     </div>
  @endsection
 
 @push('js_tambahan')
 <script>
+    function tambahData() {
+        $('#modal_mahasiswa').modal('show');
+        $('#modal_mahasiswa .modal-title').html('Tambah Data Mahasiswa');
+        $('#modal_mahasiswa #nim').val('');
+        $('#modal_mahasiswa #nama').val('');
+        $('#modal_mahasiswa #hp').val('');
+    }
+
     function updateData(th){
         $('#modal_mahasiswa').modal('show');
         $('#modal_mahasiswa .modal-title').html('Edit Data Mahasiswa');
@@ -125,6 +169,47 @@
         $('#modal_mahasiswa #hp').val($(th).data('hp'));
         $('#modal_mahasiswa #form_mahasiswa').attr('action', $(th).data('url'));
         $('#modal_mahasiswa #form_mahasiswa').append('<input type="hidden" name="_method" value="PUT">');
+    }
+
+    function showData(element) {
+        $.ajax({
+            url: '{{  url('mahasiswa') }}'+ '/' + element,
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+            
+            $('#modal_show_mahasiswa').modal('show');
+            
+            $('#show_nim').val(data.nim);
+            $('#show_nama').val(data.nama);
+            $('#show_hp').val(data.hp);
+            },
+            error: function() {
+            alert('Error occurred while retrieving data.');
+            }
+        });
+    }
+
+    function deleteData(element) {
+        if (!confirm("Anda Yakin Ingin Menghapus Data Ini?")) {
+            return false;
+        }
+        // console.log("Melakukan anu");
+        $.ajax({
+            url: '{{  url('mahasiswa/delete') }}'+ '/' + element,
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                "_token": "{{ csrf_token() }}",
+            },
+            success: function(data) {
+                alert(data.message);
+                location.reload();
+            },
+            error: function() {
+                alert('Error occurred while deleting data.');
+            }
+        });
     }
 
     $(document).ready(function (){
@@ -143,12 +228,9 @@
                 {data:'hp',name:'hp', sortable: false, searchable: true},
                 {data:'id',name:'id', sortable: false, searchable: false,
                     render: function(data, type, row, meta){
-                        var btn = `<button data-url="{{ url('/mahasiswa')}}/`+data+`" class="btn btn-xs btn-warning" onclick="updateData(this)" data-id="`+row.id+`" data-nim="`+row.nim+`" data-nama="`+row.nama+`" data-hp="`+row.hp+`"><i class="fa fa-edit"></i> Edit</button>` +
-                                  `<a href="{{ url('/mahasiswa/') }} " class="btn btn-xs btn-info"><i class="fa fa-list"></i> Detail</a>` +
-                                  `<form method="POST" action="{{ url('/mahasiswa/') }}`+data+`">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="btn btn-xs btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"><i class="fa fa-trash"></i> Hapus</button>
-                                    </form>`;
+                        var btn = `<button data-url="{{ url('/mahasiswa')}}/`+data+`" class="btn btn-xs btn-warning mr-2 ml-2" onclick="updateData(this)" data-id="`+row.id+`" data-nim="`+row.nim+`" data-nama="`+row.nama+`" data-hp="`+row.hp+`"><i class="fa fa-edit"></i>Edit</button>` +
+                                  `<button href="{{ url('/mahasiswa/') }}/`+data+` " onclick="showData(`+data+`)" class="btn btn-xs btn-info mr-2 ml-2"><i class="fa fa-list"></i>Detail</button>` +
+                                  `<button class="btn btn-xs btn-danger" onclick="deleteData(`+data+`)"><i class="fa fa-trash mr-2 ml-2"></i>Hapus</button>`;
                         return btn;
                     }
                 },
